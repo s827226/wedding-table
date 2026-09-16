@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婚禮桌號查詢</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; background-color: #fcf8f5; }
+        input { padding: 12px; width: 80%; max-width: 300px; font-size: 18px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; }
+        .card { background: white; padding: 20px; margin: 10px auto; max-width: 300px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .table-num { font-size: 24px; color: #d4a373; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>囍 婚禮桌號查詢 囍</h2>
+    <input type="text" id="searchInput" onkeyup="searchGuest()" placeholder="請輸入您的姓名...">
+    <div id="result"></div>
+
+    <script>
+        const guests = [
+            {
+                "name": "曾玉炳",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "黃常立",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "劉美惠",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "劉紹騰",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "紹騰妻",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "新娘",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "新郎",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "陳主僑",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "陳黃梅華",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "小姑姑",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "新郎舅媽",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "新郎長輩",
+                "table": "主桌",
+                "note": ""
+            },
+            {
+                "name": "黃雅璐",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃馨儀",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "蘇敬宏",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃若綺",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "若綺男",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃琰傑",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃麗蘭",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃綺珍",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "綺珍媽媽",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "外婆照顧者",
+                "table": "女方1",
+                "note": ""
+            },
+            {
+                "name": "黃金蘭",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "金蘭夫",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "劉富龍1",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "劉富龍2",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "劉富龍3",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "劉富龍4",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "劉富龍5",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "拜把1",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "拜把2",
+                "table": "女方2",
+                "note": ""
+            },
+            {
+                "name": "黃貴香1",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "黃貴香2",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "蕭士芳1",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "蕭士芳2",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "蕭士芳3",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "蕭士芳4",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "蕭士庭",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "劉富傑1",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "劉富傑2",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "劉富傑3",
+                "table": "女方3",
+                "note": ""
+            },
+            {
+                "name": "黃白蘭1",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "黃白蘭2",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "陳璽文1",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "陳璽文2",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "陳璽文3",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "陳璽文4",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "劉富正1",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "劉富正2",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "劉富正3",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "劉富正4",
+                "table": "女方4",
+                "note": ""
+            },
+            {
+                "name": "劉偉彥1",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉偉彥2",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉浩彥",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉紹盟1",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉紹盟2",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉正彥1",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉正彥2",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉正彥3",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉正彥4",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "劉文彥",
+                "table": "女方5",
+                "note": ""
+            },
+            {
+                "name": "黃國忠1",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃國忠2",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠蘭1",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠蘭2",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠美1",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠美2",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠英1",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃惠英2",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃菊蘭1",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃菊蘭2",
+                "table": "女方6",
+                "note": ""
+            },
+            {
+                "name": "黃文傑1",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃文傑2",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃綺雁1",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃綺雁2",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃美文",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "美文媽媽",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃世忠1",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃世忠2",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "黃世偉",
+                "table": "女方7",
+                "note": ""
+            },
+            {
+                "name": "劉菊惠1",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "劉菊惠2",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "劉菊惠3",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "劉菊惠4",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "劉菊惠5",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "黃聖海1",
+                "table": "女方8",
+                "note": ""
+            },
+            {
+                "name": "黃聖海2",
+                "table": "女方8",
+                "note": ""
+            }
+        ];
+
+        function searchGuest() {
+            const query = document.getElementById("searchInput").value.trim();
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            if (query === "") return;
+
+            const matches = guests.filter(g => g.name.includes(query));
+
+            if (matches.length === 0) {
+                resultDiv.innerHTML = "<p>查無資料，請確認字是否有誤，或洽現場工作人員。</p>";
+            } else {
+                matches.forEach(g => {
+                    resultDiv.innerHTML += `
+                        <div class="card">
+                            <h3>${g.name} 閣下</h3>
+                            <p class="table-num">桌號：${g.table}</p>
+                            <p style="color: #888;">${g.note || ''}</p>
+                        </div>`;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
