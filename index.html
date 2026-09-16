@@ -12,9 +12,9 @@
     </style>
 </head>
 <body>
-    
     <h2> 婚禮桌號查詢 </h2>
     <input type="text" id="searchInput" onkeyup="searchGuest()" placeholder="請輸入您的姓名...">
+    <div id="result"></div>
 
     <script>
         const guests = [
@@ -465,7 +465,7 @@
             const matches = guests.filter(g => g.name.includes(query));
 
             if (matches.length === 0) {
-                resultDiv.innerHTML = "<p>查無資料，請確認字是否有誤，或洽現場招待人員。</p>";
+                resultDiv.innerHTML = "<p>查無資料，請確認字是否有誤，或洽現場工作人員。</p>";
             } else {
                 matches.forEach(g => {
                     resultDiv.innerHTML += `
