@@ -12,7 +12,7 @@
     </style>
 </head>
 <body>
-    <h2>囍 婚禮桌號查詢 囍</h2>
+    <h2> 婚禮桌號查詢 </h2>
     <input type="text" id="searchInput" onkeyup="searchGuest()" placeholder="請輸入您的姓名...">
     <div id="result"></div>
 
@@ -470,7 +470,7 @@
                 matches.forEach(g => {
                     resultDiv.innerHTML += `
                         <div class="card">
-                            <h3>${g.name} 閣下</h3>
+                            <h3>${g.name} </h3>
                             <p class="table-num">桌號：${g.table}</p>
                             <p style="color: #888;">${g.note || ''}</p>
                         </div>`;
